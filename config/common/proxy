@@ -1,0 +1,10 @@
+function enable_proxy {
+  export HTTPS_PROXY=$PROXY_URL
+  export HTTP_PROXY=$HTTPS_PROXY
+  export NO_PROXY=$IGNORE_PROXY
+}
+function disable_proxy {
+  unset HTTPS_PROXY
+  unset HTTP_PROXY
+  unset NO_PROXY
+}

@@ -1,0 +1,2 @@
+export PROXY_URL=""
+export IGNORE_PROXY=""

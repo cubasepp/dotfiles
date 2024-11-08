@@ -1,0 +1,18 @@
+include ~/.local/share/cubasepp/themes/kitty/catppuccin-mocha.conf
+include ~/.kitty.custom
+
+font_family      Hack Nerd Font Mono
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+font_size        12
+
+background_opacity 0.9
+
+tab_bar_edge top
+tab_bar_style powerline
+
+enable_audio_bell no
+
+underline_hyperlinks hover
+open_url_with default

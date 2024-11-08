@@ -1,0 +1,12 @@
+shopt -s histappend
+
+source $CUBASEPP_PATH/confg/common/config
+source $CUBASEPP_PATH/config/bash/agnoster
+source $CUBASEPP_PATH/config/bash/aliases
+source ~/.zshenv
+
+source /usr/share/bash-completion/bash_completion
+
+if [ -f $HOME/.local/bin/mise ]; then
+  eval "$($HOME/.local/bin/mise activate bash)"
+fi

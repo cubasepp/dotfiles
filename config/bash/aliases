@@ -1,0 +1,10 @@
+# LS
+alias l="ls -lah"
+alias ll="ls -lh"
+alias la="ls -lAh"
+
+# Directories
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+

@@ -1,0 +1,7 @@
+setopt APPEND_HISTORY
+
+source $HOME/.local/share/cubasepp/config/common/config
+
+if [ -f $HOME/.local/bin/mise ]; then
+  eval "$($HOME/.local/bin/mise activate zsh)"
+fi
