@@ -1,0 +1,3 @@
+UNAME=$(uname)
+CUBASEPP_PATH=$HOME/.local/share/cubasepp
+CUBASEPP_PLUGIN_PATH=$CUBASEPP_PATH/plugins
