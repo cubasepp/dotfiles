@@ -1,0 +1,5 @@
+source ~/.local/share/cubasepp/config/common/term
+source ~/.local/share/cubasepp/config/common/aliases
+source ~/.local/share/cubasepp/config/common/editor
+source ~/.local/share/cubasepp/config/common/proxy
+

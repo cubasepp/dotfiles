@@ -1,3 +1,28 @@
-setopt APPEND_HISTORY
+source $HOME/.local/share/cubasepp/config/common/cubasepp
 
-source $HOME/.local/share/cubasepp/config/common/config
+# Skip all aliases in lib files
+zstyle ':omz:lib:*' aliases no
+
+export ZSH="$CUBASEPP_PLUGIN_PATH/oh-my-zsh"
+ZSH_THEME="agnoster"
+
+plugins=(
+  git
+  ruby
+  rails
+  tmux
+  zsh-syntax-highlighting
+  zsh-autocomplete
+)
+
+source $HOME/.local/share/cubasepp/config/common/zsh
+source $ZSH/oh-my-zsh.sh
+
+zstyle ':autocomplete:history-search-backward:*' list-lines 25
+
+# Backup not decided yet
+# https://github.com/zsh-users/zsh-autosuggestions
+# history-substring-search
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[B' history-substring-search-down
+

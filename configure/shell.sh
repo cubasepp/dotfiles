@@ -16,5 +16,5 @@ fi
 
 if [ -x "$(command -v zoxide)" ]; then
   echo 'eval "$(zoxide init bash)"' >>$HOME/.bashrc
-  echo 'eval "$(zoxide init zshrc)"' >>$HOME/.zshrc
+  echo 'eval "$(zoxide init zsh)"' >>$HOME/.zshrc
 fi

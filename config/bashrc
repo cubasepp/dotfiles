@@ -1,5 +1,6 @@
 shopt -s histappend
 
+source ~/.local/share/cubasepp/config/common/cubasepp
 source ~/.local/share/cubasepp/config/common/config
 source ~/.local/share/cubasepp/config/bash/agnoster
 source ~/.local/share/cubasepp/config/bash/aliases

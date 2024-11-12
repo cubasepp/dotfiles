@@ -1,0 +1,2 @@
+export CUBASEPP_PATH=$HOME/.local/share/cubasepp
+export CUBASEPP_PLUGIN_PATH=$CUBASEPP_PATH/plugins
