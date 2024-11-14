@@ -1,6 +1,7 @@
 #!bin/bash
 
 if [[ "$UNAME" == "Linux" ]]; then
+  mkdir -p $HOME/.local/bin
   cd /tmp
   curl -sLo nvim.tar.gz "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
   tar -C $HOME/.local/bin/ -xzf nvim.tar.gz
