@@ -1,7 +1,7 @@
-source $HOME/.local/share/cubasepp/config/common/cubasepp
-
 # Skip all aliases in lib files
 zstyle ':omz:lib:*' aliases no
+
+source $HOME/.local/share/cubasepp/config/common/cubasepp
 
 export ZSH="$CUBASEPP_PLUGIN_PATH/oh-my-zsh"
 ZSH_THEME="agnoster"
@@ -12,17 +12,13 @@ plugins=(
   rails
   tmux
   zsh-syntax-highlighting
-  zsh-autocomplete
+  history-substring-search
+  # zsh-autocomplete
 )
 
 source $HOME/.local/share/cubasepp/config/common/zsh
 source $ZSH/oh-my-zsh.sh
 
-zstyle ':autocomplete:history-search-backward:*' list-lines 25
-
-# Backup not decided yet
-# https://github.com/zsh-users/zsh-autosuggestions
-# history-substring-search
-# bindkey '^[[A' history-substring-search-up
-# bindkey '^[[B' history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
