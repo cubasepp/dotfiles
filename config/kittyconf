@@ -16,3 +16,6 @@ enable_audio_bell no
 
 underline_hyperlinks hover
 open_url_with default
+
+https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.macos_option_as_alt
+macos_option_as_alt yes
