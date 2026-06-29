@@ -1,6 +1,11 @@
 set -g @catppuccin_flavor "mocha"
 set -g @catppuccin_window_status_style "rounded"
 
+# Show the window name (#W), not the pane title (#T). Catppuccin defaults both
+# to " #T", which makes every window show its cwd-derived pane title.
+set -g @catppuccin_window_text " #W"
+set -g @catppuccin_window_current_text " #W"
+
 run '$HOME/.tmux/plugins/tmux/catppuccin.tmux'
 
 set -g status-right-length 100
