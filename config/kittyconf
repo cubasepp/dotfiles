@@ -1,6 +1,10 @@
 include ~/.local/share/cubasepp/themes/kitty/catppuccin-mocha.conf
 include ~/.kitty.custom
 
+# Put mise shims on PATH so GUI-launched programs (e.g. open-actions overlays
+# opening nvim) get node/npm without sourcing the shell. Fixes cspell-lsp 127.
+env PATH=${HOME}/.local/share/mise/shims:${PATH}
+
 font_family      Hack Nerd Font Mono
 bold_font        auto
 italic_font      auto
