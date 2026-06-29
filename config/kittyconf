@@ -28,6 +28,10 @@ url_style curly
 
 map cmd+c        copy_to_clipboard
 map cmd+v        paste_from_clipboard
+
+# Shift+Enter -> CSI-u sequence Claude Code reads as "newline, don't submit".
+# Sent directly by kitty so it passes through tmux regardless of extended-keys negotiation.
+map shift+enter send_text all \x1b[13;2u
 map shift+insert paste_from_clipboard
 copy_on_select true
 
