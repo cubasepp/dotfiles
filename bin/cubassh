@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# cubassh — pick an SSH host from ~/.ssh/config and connect (via gum).
+#
+# Usage:
+#   cubassh                 # fuzzy-pick a host and connect
+#   cubassh <ssh-args...>   # extra args are forwarded to ssh (e.g. -L 8080:localhost:80)
+
+set -euo pipefail
+
+SSH_CONFIG="${SSH_CONFIG:-$HOME/.ssh/config}"
+
+if ! command -v gum >/dev/null 2>&1; then
+  echo "cubassh: 'gum' is not installed — run the cubasepp installer (apps/14_gum.sh)" >&2
+  exit 1
+fi
+
+if [ ! -f "$SSH_CONFIG" ]; then
+  echo "cubassh: no ssh config found at $SSH_CONFIG" >&2
+  exit 1
+fi
+
+# Build "<host>\t<user>@<hostname>:<port>" rows, skipping wildcard patterns.
+rows=$(awk '
+  function flush() {
+    if (host != "" && host !~ /[*?]/) {
+      meta = (user != "" ? user "@" : "") hostname (port != "" ? ":" port : "")
+      printf "%s\t%s\n", host, meta
+    }
+  }
+  tolower($1) == "host"     { flush(); host = $2; hostname = ""; user = ""; port = ""; next }
+  tolower($1) == "hostname" { hostname = $2 }
+  tolower($1) == "user"     { user = $2 }
+  tolower($1) == "port"     { port = $2 }
+  END { flush() }
+' "$SSH_CONFIG")
+
+if [ -z "$rows" ]; then
+  echo "cubassh: no hosts found in $SSH_CONFIG" >&2
+  exit 1
+fi
+
+selection=$(printf '%s\n' "$rows" | column -t -s $'\t' |
+  gum filter --placeholder "Pick a host to ssh into…" --height 15) || exit 0
+
+host=$(awk '{print $1}' <<<"$selection")
+[ -z "$host" ] && exit 0
+
+gum style --foreground 212 "→ ssh $host"
+exec ssh "$@" "$host"

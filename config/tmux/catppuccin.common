@@ -1,7 +1,7 @@
 set -g @catppuccin_flavor "mocha"
 set -g @catppuccin_window_status_style "rounded"
 
-run '$HOME/.config/tmux/plugins/tmux/catppuccin.tmux'
+run '$HOME/.tmux/plugins/tmux/catppuccin.tmux'
 
 set -g status-right-length 100
 set -g status-left-length 100

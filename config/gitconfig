@@ -1,0 +1,49 @@
+[user]
+  name = Michael Vogl
+  email = michael.vogl@hey.com
+
+;[includeIf "gitdir:~/work/mivo/"]
+;  path = ~/.gitconfig-mivo
+
+[diff]
+  tool = vimdiff
+  conflictStyle = zdiff3
+
+[merge]
+  tool = vimdiff
+  conflictstyle = zdiff3
+
+[mergetool "vimdiff"]
+    cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[alias]
+  st = status -sb
+
+[include]
+  path = ~/.local/share/cubasepp/themes/delta/catppuccin.gitconfig
+
+[color]
+  ui = true
+
+[core]
+  pager = delta
+  excludesfile = /Users/miv/.cubasepp.ignore
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  side-by-side = false
+  line-numbers = true
+  features = catppuccin-mocha
+
+[diff]
+  colorMoved = default

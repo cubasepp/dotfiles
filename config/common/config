@@ -1,8 +1,0 @@
-export CUBASEPP_PATH=$HOME/.local/share/cubasepp
-export CUBASEPP_PLUGIN_PATH=$CUBASEPP_PATH/plugins
-
-source ~/.local/share/cubasepp/config/common/term
-source ~/.local/share/cubasepp/config/common/aliases
-source ~/.local/share/cubasepp/config/common/history
-source ~/.local/share/cubasepp/config/common/editor
-source ~/.local/share/cubasepp/config/common/proxy

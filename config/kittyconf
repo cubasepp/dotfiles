@@ -9,6 +9,9 @@ font_size        12
 
 background_opacity 0.9
 
+# Padding (logical px) between terminal content and window edge
+window_padding_width 5
+
 tab_bar_edge top
 tab_bar_style powerline
 
@@ -16,6 +19,13 @@ enable_audio_bell no
 
 underline_hyperlinks hover
 open_url_with default
+detect_urls yes
+url_style curly
 
-https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.macos_option_as_alt
+map cmd+c        copy_to_clipboard
+map cmd+v        paste_from_clipboard
+map shift+insert paste_from_clipboard
+copy_on_select true
+
+# https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.macos_option_as_alt
 macos_option_as_alt yes

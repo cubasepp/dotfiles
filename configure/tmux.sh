@@ -13,4 +13,7 @@ else
   cp "$HOME/.local/share/cubasepp/config/tmux/ssh.common" "$HOME/.tmux/config"
   cp "$HOME/.local/share/cubasepp/config/tmux/catppuccin.common" "$HOME/.tmux/config"
   cp "$HOME/.local/share/cubasepp/config/tmux/tmux.conf" "$HOME/.tmux.conf"
+
+  # Install declared TPM plugins (catppuccin, tmux-sensible) non-interactively
+  "$HOME/.tmux/plugins/tpm/bin/install_plugins"
 fi

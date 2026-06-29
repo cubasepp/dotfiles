@@ -1,7 +1,9 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v tmux)" ]; then
-  echo "Hombrew already installed"
-elif [[ "$UNAME" == "Darwin" ]]; then
-  curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | sh
+if [[ "$UNAME" == "Darwin" ]]; then
+  if [ -x "$(command -v brew)" ]; then
+    echo "Homebrew already installed"
+  else
+    curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | sh
+  fi
 fi

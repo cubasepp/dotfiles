@@ -1,1 +1,4 @@
 plugins/
+
+# Generated at configure time from config/common/aliases.{mac,linux}
+config/common/aliases

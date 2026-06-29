@@ -1,8 +1,8 @@
 # BAT_THEME
 export BAT_THEME="Catppuccin Mocha"
 
-export PATH="$HOME/.local/bin:$HOME/.local/bin/nvim-linux64/bin:$PATH"
 
 # ENV
 export CUBASEPP_PATH=$HOME/.local/share/cubasepp
 export CUBASEPP_PLUGIN_PATH=$CUBASEPP_PATH/plugins
+export PATH="$CUBASEPP_PATH/bin:$HOME/.local/bin:$HOME/.local/bin/nvim-linux64/bin:$PATH"
