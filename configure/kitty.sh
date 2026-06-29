@@ -4,4 +4,5 @@ if [ -x "$(command -v kitty)" ]; then
   touch "$HOME/.kitty.custom"
   mkdir -p "$HOME/.config/kitty/"
   cp "$HOME/.local/share/cubasepp/config/kittyconf" "$HOME/.config/kitty/kitty.conf"
+  cp "$HOME/.local/share/cubasepp/config/kitty-open-actions.conf" "$HOME/.config/kitty/open-actions.conf"
 fi
