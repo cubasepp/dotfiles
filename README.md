@@ -20,6 +20,14 @@ and I need the same setup everywhere, on my default shell (zsh) rather than bash
 - Prompts/UI: [gum](https://github.com/charmbracelet/gum)
 - Fonts: Hack & CaskaydiaMono Nerd Fonts
 
+Config-only (not installed by this repo, but configured if present):
+
+- **aerc** — key bindings (`config/aerc/binds.conf`). `accounts.conf` and
+  `aerc.conf` stay local; they hold credentials and per-machine settings.
+  Adds an `M` ("mark") leader on top of the upstream defaults: `Mr` read,
+  `Mu` unread, `Mt` toggle, `MA` whole folder read, plus `Mu`/`Mq` in the
+  message viewer.
+
 Everything is themed with [Catppuccin Mocha](https://github.com/catppuccin) (see `themes/`).
 
 ## Install
