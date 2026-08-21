@@ -5,4 +5,16 @@ export BAT_THEME="Catppuccin Mocha"
 # ENV
 export CUBASEPP_PATH=$HOME/.local/share/cubasepp
 export CUBASEPP_PLUGIN_PATH=$CUBASEPP_PATH/plugins
-export PATH="$CUBASEPP_PATH/bin:$HOME/.local/bin:$HOME/.local/bin/nvim-linux64/bin:$PATH"
+# Neovim tarball installs (apps/08_neovim.sh) unpack into an arch-specific
+# directory -- nvim-linux-arm64 on the pi, nvim-linux-x86_64 on x86. Pick
+# whichever is actually present instead of hardcoding one; nvim-linux64 is the
+# pre-rename name, kept for hosts installed before that changed.
+_nvimbin=""
+for _d in nvim-linux-arm64 nvim-linux-x86_64 nvim-linux64; do
+  if [[ -d "$HOME/.local/bin/$_d/bin" ]]; then
+    _nvimbin="$HOME/.local/bin/$_d/bin"
+    break
+  fi
+done
+export PATH="$CUBASEPP_PATH/bin:$HOME/.local/bin${_nvimbin:+:$_nvimbin}:$PATH"
+unset _nvimbin _d
