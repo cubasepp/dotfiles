@@ -1,3 +1,4 @@
 UNAME=$(uname)
+ARCH=$(uname -m)
 CUBASEPP_PATH=$HOME/.local/share/cubasepp
 CUBASEPP_PLUGIN_PATH=$CUBASEPP_PATH/plugins
