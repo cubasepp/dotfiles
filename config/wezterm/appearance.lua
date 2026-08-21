@@ -13,16 +13,6 @@ function M.apply(config)
 	-- output. Costs a few MB of RAM per pane.
 	config.scrollback_lines = 20000
 
-	-- The retro tab bar is one text cell tall and has no padding of its own, so
-	-- this is the only way to give the pills breathing room: top padding is the
-	-- gap between the tab bar and the terminal content.
-	config.window_padding = {
-		left = "1cell",
-		right = "1cell",
-		top = 2,
-		bottom = 2,
-	}
-
 	-- Name the initial workspace. CMD+SHIFT+E renames at runtime, but that dies
 	-- with the process; this is what makes it stick across restarts.
 	config.default_workspace = "home"
