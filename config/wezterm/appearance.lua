@@ -8,6 +8,10 @@ function M.apply(config)
 
 	config.initial_cols = 200
 	config.initial_rows = 50
+
+	-- Name the initial workspace. CMD+SHIFT+E renames at runtime, but that dies
+	-- with the process; this is what makes it stick across restarts.
+	config.default_workspace = "home"
 end
 
 return M

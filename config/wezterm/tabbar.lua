@@ -8,8 +8,10 @@ local mocha = require("colors")
 
 local M = {}
 
-local ARROW = utf8.char(0xe0b0) -- right-pointing, for the tabs
-local ARROW_LEFT = utf8.char(0xe0b2) -- left-pointing, for the status line
+-- Rounded pill caps. WezTerm draws these itself (custom_block_glyphs), as true
+-- quadratic curves, so they are pixel-perfect regardless of the font in use.
+local LEFT_CAP = utf8.char(0xe0b6) -- 
+local RIGHT_CAP = utf8.char(0xe0b4) -- 
 
 -- foreground process -> Nerd Font glyph
 local process_icons = {
@@ -87,13 +89,6 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width
 		bg, fg = mocha.surface0, mocha.subtext0
 	end
 
-	-- Colour of whatever follows, so the separator blends instead of notching.
-	local next_bg = mocha.crust
-	local next_tab = tabs[idx + 1]
-	if next_tab then
-		next_bg = next_tab.is_active and mocha.mauve or mocha.surface0
-	end
-
 	local marks = ""
 	if tab.active_pane.is_zoomed then
 		marks = marks .. " " .. utf8.char(0xf00e)
@@ -111,27 +106,38 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width
 		label = wezterm.truncate_right(label, room - 1) .. utf8.char(0x2026)
 	end
 
+	-- Each tab is its own pill: crust shows through the gap between them, so
+	-- neighbouring tabs never merge into one another the way arrows do.
 	return {
+		{ Background = { Color = mocha.crust } },
+		{ Foreground = { Color = bg } },
+		{ Text = LEFT_CAP },
 		{ Background = { Color = bg } },
 		{ Foreground = { Color = fg } },
 		{ Attribute = { Intensity = is_active and "Bold" or "Normal" } },
 		{ Text = " " .. idx .. " " .. tab_icon(tab) .. " " .. label .. marks .. " " },
-		{ Background = { Color = next_bg } },
+		{ Attribute = { Intensity = "Normal" } },
+		{ Background = { Color = mocha.crust } },
 		{ Foreground = { Color = bg } },
-		{ Text = ARROW },
+		{ Text = RIGHT_CAP .. " " },
 	}
 end)
 
 wezterm.on("update-status", function(window, pane)
-	-- Left: workspace badge.
+	-- Left: workspace badge. Deliberately NOT mauve -- that is the active tab's
+	-- colour, and matching hues made the two read as a single blob.
 	window:set_left_status(wezterm.format({
-		{ Background = { Color = mocha.mauve } },
+		{ Background = { Color = mocha.crust } },
+		{ Foreground = { Color = mocha.sapphire } },
+		{ Text = " " .. LEFT_CAP },
+		{ Background = { Color = mocha.sapphire } },
 		{ Foreground = { Color = mocha.crust } },
 		{ Attribute = { Intensity = "Bold" } },
 		{ Text = " " .. utf8.char(0xf120) .. " " .. window:active_workspace() .. " " },
+		{ Attribute = { Intensity = "Normal" } },
 		{ Background = { Color = mocha.crust } },
-		{ Foreground = { Color = mocha.mauve } },
-		{ Text = ARROW },
+		{ Foreground = { Color = mocha.sapphire } },
+		{ Text = RIGHT_CAP .. " " },
 	}))
 
 	local segs = {}
@@ -157,7 +163,7 @@ wezterm.on("update-status", function(window, pane)
 			table.insert(segs, {
 				icon = utf8.char(0xf07b),
 				text = path,
-				bg = mocha.sapphire,
+				bg = mocha.blue,
 				fg = mocha.crust,
 			})
 		end
@@ -193,14 +199,16 @@ wezterm.on("update-status", function(window, pane)
 	})
 
 	local out = {}
-	for i, seg in ipairs(segs) do
-		local prev_bg = (i == 1) and mocha.crust or segs[i - 1].bg
-		table.insert(out, { Background = { Color = prev_bg } })
+	for _, seg in ipairs(segs) do
+		table.insert(out, { Background = { Color = mocha.crust } })
 		table.insert(out, { Foreground = { Color = seg.bg } })
-		table.insert(out, { Text = ARROW_LEFT })
+		table.insert(out, { Text = LEFT_CAP })
 		table.insert(out, { Background = { Color = seg.bg } })
 		table.insert(out, { Foreground = { Color = seg.fg } })
 		table.insert(out, { Text = " " .. seg.icon .. " " .. seg.text .. " " })
+		table.insert(out, { Background = { Color = mocha.crust } })
+		table.insert(out, { Foreground = { Color = seg.bg } })
+		table.insert(out, { Text = RIGHT_CAP .. " " })
 	end
 	window:set_right_status(wezterm.format(out))
 end)
