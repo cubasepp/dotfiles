@@ -1,10 +1,9 @@
 # File system
-alias ls='eza -lh --group-directories-first --icons --hyperlink'
+alias ls='eza -lh --group-directories-first --icons --hyperlink=auto'
 alias ll='ls'
 alias lsa='ls -a'
-alias lt='eza --tree --level=2 --long --icons --git --hyperlink'
+alias lt='eza --tree --level=2 --long --icons --git --hyperlink=auto'
 alias lta='lt -a'
-alias ff="fzf --preview 'batcat --style=numbers --color=always {}'"
 alias fd='fdfind'
 alias cd='z'
 

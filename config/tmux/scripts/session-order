@@ -1,0 +1,74 @@
+#!/usr/bin/env zsh
+# Reorder tmux sessions.
+#
+# tmux has no `swap-session`, and sessions have no reorderable index: the chooser
+# can only sort them by `index` (= session id, i.e. creation order), `name`,
+# `creation` or `activity`. So the *name* has to carry the order. This script
+# maintains a numeric prefix ("1-Setup", "2-Mivo", …) and tmux.conf sorts the
+# session chooser with `-O name` so the prefixes define the order.
+#
+# Usage: session-order up|down|end [session-id]
+#
+# The session id is passed in from the key binding as #{session_id}; tmux expands
+# it against the key's target, which is more reliable than asking for the
+# "current" session from inside run-shell.
+
+emulate -L zsh
+setopt extended_glob
+
+local action=$1
+if [[ $action != (up|down|end) ]]; then
+  print -u2 "usage: session-order up|down|end [session-id]"
+  exit 1
+fi
+
+# Sessions in their current displayed order, and each one's name minus any
+# prefix this script added earlier.
+local -a ids
+local -A bases
+local line id name
+for line in "${(@f)$(tmux list-sessions -O name -F '#{session_id} #{session_name}')}"; do
+  id=${line%% *}
+  name=${line#* }
+  ids+=($id)
+  bases[$id]=${name##[0-9]##-}
+done
+(( $#ids > 1 )) || exit 0
+
+local me=${2:-$(tmux display-message -p '#{session_id}')}
+local -i pos=${ids[(ie)$me]}
+(( pos <= $#ids )) || exit 0   # current session not in the list
+
+local -i new
+case $action in
+  up)   new=pos-1 ;;
+  down) new=pos+1 ;;
+  end)  new=$#ids ;;
+esac
+(( new < 1 )) && new=1
+(( new > $#ids )) && new=$#ids
+(( new == pos )) && exit 0
+
+# Pull the current session out, then splice it back in at its new position.
+local -a rest ordered
+rest=(${ids[1,pos-1]} ${ids[pos+1,-1]})
+ordered=(${rest[1,new-1]} $me ${rest[new,-1]})
+
+# Two passes: a final name can collide with a name another session still holds,
+# and tmux refuses duplicate session names. Park everything on a unique
+# temporary name first, then assign the real ones.
+local -i i=1
+for id in $ordered; do
+  tmux rename-session -t "$id" "reorder-$$-$i" || exit 1
+  (( i++ ))
+done
+
+local -i width=1
+(( $#ordered > 9 )) && width=2
+i=1
+for id in $ordered; do
+  tmux rename-session -t "$id" "$(printf "%0${width}d-%s" $i $bases[$id])"
+  (( i++ ))
+done
+
+tmux display-message "session moved to #$new of $#ordered"

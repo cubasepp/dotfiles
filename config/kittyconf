@@ -35,5 +35,8 @@ map shift+enter send_text all \x1b[13;2u
 map shift+insert paste_from_clipboard
 copy_on_select true
 
+# Left Option = Alt, so fzf's ALT-C and zsh's Alt+F/B/D word motions keep working.
+# Right Option stays a normal macOS Option key for dead-key composition, so
+# right-Option+u then a still types ä. `yes` maps both and kills umlauts.
 # https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.macos_option_as_alt
-macos_option_as_alt yes
+macos_option_as_alt left

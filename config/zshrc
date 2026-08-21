@@ -70,10 +70,11 @@ bindkey '^[[B' history-substring-search-down
 
 source $HOME/.local/share/cubasepp/config/common/zsh_style
 
-fvim() {
-  local dir="${1:-.}"   # default = current directory
-  nvim -p $(fzf --multi --preview 'bat --style=numbers --color=always {}' --bind "change:reload(find $dir -type f)")
-}
+# fzf shell integration: CTRL-T (paste file path at cursor), ALT-C (cd into dir), CTRL-R (history search)
+source <(fzf --zsh)
+export FZF_CTRL_T_COMMAND='fd --type f --strip-cwd-prefix'
+# Preview with bat, and toggle hidden files with ctrl-h
+export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always {}' --bind 'ctrl-h:transform:[[ ! \$FZF_PROMPT =~ hidden ]] && echo \"change-prompt(hidden> )+reload(fd --type f --strip-cwd-prefix --hidden)\" || echo \"change-prompt(> )+reload(fd --type f --strip-cwd-prefix)\"'"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

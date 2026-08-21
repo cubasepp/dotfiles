@@ -17,6 +17,10 @@ else
   mkdir -p "$HOME/.tmux/layouts"
   cp "$HOME/.local/share/cubasepp/config/tmux/layouts/dev" "$HOME/.tmux/layouts/dev"
 
+  mkdir -p "$HOME/.tmux/scripts"
+  cp "$HOME/.local/share/cubasepp/config/tmux/scripts/session-order" "$HOME/.tmux/scripts/session-order"
+  chmod +x "$HOME/.tmux/scripts/session-order"
+
   # Install declared TPM plugins (catppuccin, tmux-sensible) non-interactively
   "$HOME/.tmux/plugins/tpm/bin/install_plugins"
 fi
