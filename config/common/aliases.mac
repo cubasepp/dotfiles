@@ -1,8 +1,8 @@
 # File system
-alias ls='eza -lh --group-directories-first --icons=auto --hyperlink=auto'
+alias ls='eza -lh --hyperlink --group-directories-first --icons=auto'
 alias ll='ls'
 alias lsa='ls -a'
-alias lt='eza --tree --level=2 --long --icons=auto --git --hyperlink=auto'
+alias lt='eza --tree --level=2 --hyperlink --long --icons=auto --git'
 alias lta='lt -a'
 alias fd='fdfind'
 alias cd='z'
