@@ -5,7 +5,17 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Homebrew lives in different places per platform: /opt/homebrew on Apple
+# silicon, /usr/local on Intel macs, linuxbrew on Linux. Guarded so hosts
+# without brew at all (the pi) do not error on every shell startup.
+for _brew in /opt/homebrew/bin/brew /usr/local/bin/brew \
+  /home/linuxbrew/.linuxbrew/bin/brew "$HOME/.linuxbrew/bin/brew"; do
+  if [[ -x "$_brew" ]]; then
+    eval "$("$_brew" shellenv)"
+    break
+  fi
+done
+unset _brew
 
 source $HOME/.local/share/cubasepp/config/common/cubasepp
 source $HOME/.local/share/cubasepp/themes/zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
@@ -63,7 +73,9 @@ zinit cdreplay -q
 
 eval "$($HOME/.local/bin/mise activate zsh)"
 eval "$(zoxide init zsh)"
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+if [[ -d /opt/homebrew/opt/libpq/bin ]]; then
+  export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+fi
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
