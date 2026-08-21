@@ -6,6 +6,11 @@ function M.apply(config)
 	config.window_background_opacity = 0.85
 	config.macos_window_background_blur = 20
 
+	-- Silence the "bing" on \a (bell) -- e.g. shell tab-completion errors, or a
+	-- long-running remote command finishing. Visual bell is off too (no flash).
+	config.audible_bell = "Disabled"
+	config.visual_bell = { fade_in_duration_ms = 0, fade_out_duration_ms = 0 }
+
 	config.initial_cols = 200
 	config.initial_rows = 50
 
