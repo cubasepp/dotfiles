@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WezTerm Cheat Sheet</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: { colors: {
+    rosewater:"#f5e0dc", flamingo:"#f2cdcd", pink:"#f5c2e7", mauve:"#cba6f7",
+    red:"#f38ba8", maroon:"#eba0ac", peach:"#fab387", yellow:"#f9e2af",
+    green:"#a6e3a1", teal:"#94e2d5", sky:"#89dceb", sapphire:"#74c7ec",
+    blue:"#89b4fa", lavender:"#b4befe", text:"#cdd6f4", subtext1:"#bac2de",
+    subtext0:"#a6adc8", overlay2:"#9399b2", overlay1:"#7f849c", overlay0:"#6c7086",
+    surface2:"#585b70", surface1:"#45475a", surface0:"#313244",
+    base:"#1e1e2e", mantle:"#181825", crust:"#11111b"
+  }, fontFamily: { mono:['JetBrains Mono','SFMono-Regular','Menlo','monospace'] } } }
+}
+</script>
+<style>
+  body{background:#11111b}
+  kbd{font-family:JetBrains Mono,SFMono-Regular,Menlo,monospace}
+  .hidden-row{display:none!important}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:#181825}
+  ::-webkit-scrollbar-thumb{background:#45475a;border-radius:5px}
+</style>
+</head>
+<body class="text-text font-sans antialiased">
+
+<header class="sticky top-0 z-20 backdrop-blur bg-crust/90 border-b border-surface0">
+  <div class="max-w-6xl mx-auto px-5 py-4 flex flex-wrap items-center gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-mauve grid place-items-center text-crust font-bold text-lg">W</div>
+      <div>
+        <h1 class="text-lg font-semibold leading-tight">WezTerm Cheat Sheet</h1>
+        <p class="text-xs text-overlay1">Catppuccin Mocha &middot; <span class="text-subtext0">~/.config/wezterm/</span></p>
+      </div>
+    </div>
+    <div class="flex-1 min-w-[200px]">
+      <input id="q" type="search" placeholder="Filter shortcuts&hellip;  (press /)"
+        class="w-full bg-mantle border border-surface0 rounded-lg px-3 py-2 text-sm text-text
+               placeholder:text-overlay0 outline-none focus:border-mauve focus:ring-1 focus:ring-mauve">
+    </div>
+    <nav class="hidden lg:flex gap-1 text-xs">
+      <a href="#panes"      class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Panes</a>
+      <a href="#tabs"       class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Tabs</a>
+      <a href="#workspaces" class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Workspaces</a>
+      <a href="#remote"     class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Pi</a>
+      <a href="#select"     class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Select</a>
+      <a href="#config"     class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Config</a>
+      <a href="#macos"      class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">macOS fix</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5 py-8 space-y-10">
+
+  <p id="noresults" class="hidden text-center text-overlay1 py-8">No shortcuts match that filter.</p>
+
+  <!-- ============ PANES ============ -->
+  <section id="panes" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-mauve">Panes</h2>
+      <span class="text-xs text-overlay0">splitting &amp; navigation</span>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; D</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Split pane <span class="text-text">horizontally</span> (side by side)</div>
+        <span class="text-[10px] uppercase tracking-wider text-peach shrink-0">yours</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; D</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Split pane <span class="text-text">vertically</span> (stacked)</div>
+        <span class="text-[10px] uppercase tracking-wider text-peach shrink-0">yours</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; &larr;&uarr;&rarr;&darr;</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Move focus between panes</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; &#8997; &larr;&uarr;&rarr;&darr;</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Resize the active pane</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; Z</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Zoom / unzoom pane &mdash; shows <span class="text-yellow font-mono">&#63502;</span> in the tab</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TABS ============ -->
+  <section id="tabs" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-sapphire">Tabs</h2>
+      <span class="text-xs text-overlay0">the powerline bar at the top</span>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; T</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">New tab</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; W</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Close tab (asks first)</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; 1&hellip;8</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Jump straight to tab 1&ndash;8 &middot; <kbd class="bg-surface0 rounded px-1 text-xs">&#8984; 9</kbd> = last tab</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; { / }</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Previous / next tab</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; PgUp/PgDn</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Reorder &mdash; move the current tab left / right</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; R</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Rename tab &mdash; overrides the auto title</div>
+        <span class="text-[10px] uppercase tracking-wider text-peach shrink-0">yours</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; P</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Fuzzy tab switcher</div>
+        <span class="text-[10px] uppercase tracking-wider text-peach shrink-0">yours</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORKSPACES ============ -->
+  <section id="workspaces" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-green">Workspaces</h2>
+      <span class="text-xs text-overlay0">the badge on the left of the tab bar</span>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; P</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Fuzzy-switch workspace</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; N</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Create a named workspace and jump to it</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; E</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Rename current workspace &mdash; this is how you get rid of <span class="font-mono text-yellow">default</span></div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8997; &larr; / &rarr;</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Cycle to previous / next workspace</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+    </div>
+    <div class="mt-3 rounded-lg border border-yellow/30 bg-yellow/5 px-4 py-3 text-xs text-subtext0">
+      <span class="text-yellow font-semibold">Not persisted.</span>
+      Workspace names live only as long as WezTerm runs &mdash; quit and you are back to <span class="font-mono">default</span>.
+      Surviving a restart needs a plugin such as <span class="font-mono text-subtext1">resurrect.wezterm</span>.
+    </div>
+  </section>
+
+  <!-- ============ REMOTE ============ -->
+  <section id="remote" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-peach">Raspberry Pi</h2>
+      <span class="text-xs text-overlay0">domain <span class="font-mono">rasperry</span> &middot; michi@192.168.178.37</span>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; I</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">New tab <span class="text-text">on the Pi</span>, in the current window</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; O</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Fuzzy-pick any domain (local, Pi, &hellip;)</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><code class="text-xs text-green">wzc</code></div>
+        <div class="text-sm text-subtext1 flex-1">Shell helper &mdash; connect in the background, prompt returns instantly</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+    </div>
+    <div class="mt-3 grid sm:grid-cols-2 gap-3">
+      <div class="rounded-lg border border-surface0 bg-mantle p-4">
+        <p class="text-xs font-semibold text-subtext1 mb-2">Why the CLI blocks</p>
+        <pre class="text-[11px] text-overlay2 bg-crust rounded p-2.5 overflow-x-auto"><code>wezterm connect rasperry     # blocks the shell
+wezterm connect rasperry &amp;!  # detached (zsh)
+wzc                          # same, as a function</code></pre>
+        <p class="text-[11px] text-overlay1 mt-2"><span class="font-mono">wezterm connect</span> is a foreground client: it lives as long as its window. Not a hang.</p>
+      </div>
+      <div class="rounded-lg border border-surface0 bg-mantle p-4">
+        <p class="text-xs font-semibold text-subtext1 mb-2">Mux multiplexing is on</p>
+        <p class="text-[11px] text-overlay1">No <span class="font-mono">multiplexing</span> field set, so it defaults to <span class="font-mono text-text">"WezTerm"</span>: a
+        <span class="font-mono">wezterm-mux-server</span> runs on the Pi and <span class="text-text">keeps your tabs alive</span> after you disconnect, tmux-style.</p>
+        <p class="text-[11px] text-overlay1 mt-2">Both sides are on <span class="font-mono text-green">20240203-110809</span> &mdash; matching versions, which the mux protocol requires.</p>
+        <p class="text-[11px] text-overlay1 mt-2">Want plain SSH instead? Add <span class="font-mono text-yellow">multiplexing = "None"</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SELECT ============ -->
+  <section id="select" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-pink">Select, copy &amp; search</h2>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 bg-mauve/5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-mauve border border-mauve rounded px-2 py-0.5 text-xs text-crust font-semibold">&#8963; &#8679; Space</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">
+          <span class="text-text">QuickSelect &mdash; &ldquo;insert path&rdquo;.</span>
+          Labels appear over every match; type the letters to insert that text at the prompt.
+        </div>
+        <span class="text-[10px] uppercase tracking-wider text-mauve shrink-0">fixed</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; X</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Copy mode &mdash; vim-style keyboard selection</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; F</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Search the scrollback</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; U</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Character / emoji picker (copies on select)</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; K</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Clear scrollback</div>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; C / &#8984; V</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Copy / paste</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONFIG ============ -->
+  <section id="config" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-teal">Config, app &amp; CLI</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+        <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+          <div class="w-32 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; R</kbd></div>
+          <div class="text-sm text-subtext1 flex-1">Reload config</div>
+        </div>
+        <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+          <div class="w-32 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; L</kbd></div>
+          <div class="text-sm text-subtext1 flex-1">Debug overlay &mdash; shows key events &amp; Lua errors</div>
+        </div>
+        <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+          <div class="w-32 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; P</kbd></div>
+          <div class="text-sm text-subtext1 flex-1">Command palette</div>
+        </div>
+        <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+          <div class="w-32 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; N</kbd></div>
+          <div class="text-sm text-subtext1 flex-1">New window</div>
+        </div>
+        <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+          <div class="w-32 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8997; Enter</kbd></div>
+          <div class="text-sm text-subtext1 flex-1">Toggle fullscreen</div>
+        </div>
+        <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+          <div class="w-32 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; + &minus; 0</kbd></div>
+          <div class="text-sm text-subtext1 flex-1">Font bigger / smaller / reset</div>
+        </div>
+      </div>
+      <div class="rounded-xl border border-surface0 bg-mantle p-4 space-y-3">
+        <p class="text-xs font-semibold text-subtext1">Useful commands</p>
+        <pre class="text-[11px] text-overlay2 bg-crust rounded p-2.5 overflow-x-auto"><code>wezterm show-keys --lua    <span class="text-overlay0"># every active binding</span>
+wezterm ls-fonts           <span class="text-overlay0"># font resolution</span>
+wezterm cli list           <span class="text-overlay0"># panes/tabs of the mux</span>
+wezterm --version</code></pre>
+        <p class="text-xs font-semibold text-subtext1 pt-1">Tab bar internals</p>
+        <p class="text-[11px] text-overlay1">Two Lua event handlers do the work:
+          <span class="font-mono text-text">format-tab-title</span> (icons, colors, truncation) and
+          <span class="font-mono text-text">update-status</span> (workspace badge, cwd, battery, clock).</p>
+        <p class="text-[11px] text-overlay1"><span class="font-mono text-yellow">use_fancy_tab_bar = false</span> is what allows real powerline separators.
+          The status line renders <em>inside</em> the tab bar &mdash; so hiding the bar hides the status line too.</p>
+        <p class="text-xs font-semibold text-subtext1 pt-1">Module layout</p>
+        <pre class="text-[11px] text-overlay2 bg-crust rounded p-2.5 overflow-x-auto"><code>~/.config/wezterm/
+  wezterm.lua     <span class="text-overlay0">entry point</span>
+  colors.lua      <span class="text-overlay0">mocha palette</span>
+  appearance.lua  <span class="text-overlay0">scheme, opacity, blur</span>
+  fonts.lua       <span class="text-overlay0">Hack Nerd Font Mono 12</span>
+  tabbar.lua      <span class="text-overlay0">tab bar + status line</span>
+  keys.lua        <span class="text-overlay0">key bindings</span>
+  domains.lua     <span class="text-overlay0">ssh/mux domains</span>
+  startup.lua     <span class="text-overlay0">window centring</span></code></pre>
+        <p class="text-[11px] text-overlay1">Managed by <span class="font-mono text-text">cubasepp</span>:
+          edit <span class="font-mono">config/wezterm/</span> in the repo, then <span class="font-mono">./configure.sh wezterm</span>.
+          Note <span class="font-mono">~/.wezterm.lua</span> would take precedence, so the installer deletes it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MACOS ============ -->
+  <section id="macos" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-red">The macOS fix</h2>
+      <span class="text-xs text-overlay0">why <kbd class="font-mono">&#8963;&#8679;Space</kbd> was dead</span>
+    </div>
+    <div class="rounded-xl border border-red/30 bg-red/5 p-4 space-y-3">
+      <p class="text-sm text-subtext1">
+        The key never reached WezTerm. macOS&rsquo;s input-source switcher claims <kbd class="font-mono text-text">&#8963;Space</kbd>
+        <em>and</em> an undocumented <kbd class="font-mono text-text">&#8963;&#8679;Space</kbd> for cycling backwards &mdash; the latter appears
+        nowhere in System Settings. No amount of Lua could have fixed it.
+      </p>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div class="bg-crust rounded-lg p-3">
+          <p class="text-[11px] font-semibold text-subtext0 mb-1.5">Disabled</p>
+          <table class="text-[11px] w-full text-overlay2">
+            <tr><td class="py-0.5 pr-2 font-mono text-red">60</td><td class="font-mono">&#8963;Space</td><td class="text-overlay1">prev input source</td></tr>
+            <tr><td class="py-0.5 pr-2 font-mono text-red">61</td><td class="font-mono">&#8963;&#8997;Space</td><td class="text-overlay1">next input source</td></tr>
+          </table>
+          <p class="text-[10px] text-overlay0 mt-1.5">in <span class="font-mono">com.apple.symbolichotkeys</span></p>
+        </div>
+        <div class="bg-crust rounded-lg p-3">
+          <p class="text-[11px] font-semibold text-subtext0 mb-1.5">To undo</p>
+          <p class="text-[11px] text-overlay1">System Settings &rarr; Keyboard &rarr; Keyboard Shortcuts &rarr; Input Sources, re-check the boxes. Or:</p>
+          <pre class="text-[10px] text-overlay2 mt-1.5 overflow-x-auto"><code>cp ~/symbolichotkeys.plist.bak \
+   ~/Library/Preferences/com.apple.symbolichotkeys.plist</code></pre>
+        </div>
+      </div>
+      <p class="text-[11px] text-overlay1">Untouched: <kbd class="font-mono">&#8984;Space</kbd> (Spotlight) and <kbd class="font-mono">&#8963;&#8984;Space</kbd> (emoji).
+        You lose keyboard input-source switching &mdash; irrelevant with only the ABC layout installed.</p>
+    </div>
+  </section>
+
+  <!-- ============ BACKUPS ============ -->
+  <section data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-overlay2">Backups</h2>
+      <span class="text-xs text-overlay0">all in <span class="font-mono">~</span></span>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="text-[11px] uppercase tracking-wider text-overlay0 border-b border-surface0">
+          <tr><th class="text-left px-4 py-2 font-medium">File</th><th class="text-left px-4 py-2 font-medium">Snapshot of</th></tr>
+        </thead>
+        <tbody class="divide-y divide-surface0/70 text-subtext0">
+          <tr data-row><td class="px-4 py-2 font-mono text-xs text-green">.wezterm.lua.bak</td><td class="px-4 py-2 text-xs">Your true original, 88 lines &mdash; pre-cubasepp rollback</td></tr>
+          <tr data-row><td class="px-4 py-2 font-mono text-xs">.wezterm.lua.pretabbar</td><td class="px-4 py-2 text-xs">Identical to the original (earlier attempts were reverted)</td></tr>
+          <tr data-row><td class="px-4 py-2 font-mono text-xs">.wezterm.lua.preworkspace</td><td class="px-4 py-2 text-xs">Tab bar in, before workspace keys</td></tr>
+          <tr data-row><td class="px-4 py-2 font-mono text-xs">.wezterm.lua.predomain</td><td class="px-4 py-2 text-xs">Before the Pi domain keys</td></tr>
+          <tr data-row><td class="px-4 py-2 font-mono text-xs">.zshrc.bak</td><td class="px-4 py-2 text-xs">Before the <span class="font-mono">wzc</span> function</td></tr>
+          <tr data-row><td class="px-4 py-2 font-mono text-xs">symbolichotkeys.plist.bak</td><td class="px-4 py-2 text-xs">macOS hotkeys before 60/61 were disabled</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="pt-4 pb-8 text-center text-[11px] text-overlay0">
+    WezTerm 20240203-110809-5046fc22 &middot; Catppuccin Mocha &middot;
+    <span class="text-peach">yours</span> = pre-existing &middot;
+    <span class="text-green">new</span> = added &middot;
+    <span class="text-mauve">fixed</span> = was broken
+  </footer>
+</main>
+
+<script>
+const q = document.getElementById('q');
+const rows = [...document.querySelectorAll('[data-row]')];
+const secs = [...document.querySelectorAll('[data-sec]')];
+const none = document.getElementById('noresults');
+
+q.addEventListener('input', () => {
+  const t = q.value.trim().toLowerCase();
+  let hits = 0;
+  rows.forEach(r => {
+    const match = !t || r.textContent.toLowerCase().includes(t);
+    r.classList.toggle('hidden-row', !match);
+    if (match) hits++;
+  });
+  // hide a section whose rows are all filtered out
+  secs.forEach(s => {
+    const own = s.querySelectorAll('[data-row]');
+    const vis = [...own].some(r => !r.classList.contains('hidden-row'));
+    s.classList.toggle('hidden-row', own.length > 0 && !vis);
+  });
+  none.classList.toggle('hidden', hits > 0);
+});
+
+// "/" focuses the filter
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+  if (e.key === 'Escape') { q.value = ''; q.dispatchEvent(new Event('input')); q.blur(); }
+});
+</script>
+</body>
+</html>

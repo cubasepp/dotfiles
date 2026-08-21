@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# wzc — attach to a WezTerm mux domain in a detached background window.
+#
+# `wezterm connect` is a foreground client: it stays alive as long as its window
+# and so blocks the shell it was launched from. This detaches it, and the prompt
+# comes straight back.
+#
+# Usage:
+#   wzc              # connect to $WZC_DOMAIN, or "rasperry"
+#   wzc <domain>     # connect to a named ssh/mux domain
+
+set -euo pipefail
+
+if ! command -v wezterm >/dev/null 2>&1; then
+  echo "wzc: 'wezterm' is not installed — run the cubasepp installer (apps/15_wezterm.sh)" >&2
+  exit 1
+fi
+
+domain="${1:-${WZC_DOMAIN:-rasperry}}"
+
+nohup wezterm connect "$domain" >/dev/null 2>&1 &
+echo "wzc: connecting to '$domain' in the background"
