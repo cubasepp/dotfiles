@@ -48,7 +48,10 @@ tailwind.config = {
       <a href="#tabs"       class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Tabs</a>
       <a href="#workspaces" class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Workspaces</a>
       <a href="#remote"     class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Pi</a>
+      <a href="#scroll"     class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Scroll</a>
       <a href="#select"     class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Select</a>
+      <a href="#copymode"   class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Copy mode</a>
+      <a href="#search"     class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Search</a>
       <a href="#config"     class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">Config</a>
       <a href="#macos"      class="px-2.5 py-1.5 rounded-md text-subtext0 hover:bg-surface0 hover:text-text">macOS fix</a>
     </nav>
@@ -128,6 +131,46 @@ tailwind.config = {
         <div class="text-sm text-subtext1 flex-1">Fuzzy tab switcher</div>
         <span class="text-[10px] uppercase tracking-wider text-peach shrink-0">yours</span>
       </div>
+    </div>
+  </section>
+
+  <section id="scroll" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-yellow">Scrolling</h2>
+      <span class="text-xs text-overlay0">moving through the scrollback</span>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; &uarr; / &darr;</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Scroll <span class="text-text">one line</span> up / down</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8997; &uarr; / &darr;</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Scroll <span class="text-text">half a page</span></div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8679; PageUp / PageDn</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Scroll a full page &mdash; on a MacBook this is <kbd class="bg-surface0 rounded px-1">Fn &#8679; &uarr;/&darr;</kbd></div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; Home / End</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Jump to top / bottom of scrollback (<kbd class="bg-surface0 rounded px-1">Fn &larr;/&rarr;</kbd>)</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; K</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Clear the scrollback entirely</div>
+        
+      </div>
+    </div>
+    <div class="mt-3 rounded-lg border border-yellow/30 bg-yellow/5 px-4 py-3 text-xs text-subtext0">
+      <span class="text-yellow font-semibold">Only Shift+PageUp/PageDown ships by default</span>, which is awkward on a
+      MacBook with no PageUp key and gives you no line-by-line scroll. The &#8984;-based bindings above were added for that.
+      For precise navigation use copy mode instead &mdash; it has <span class="font-mono">g</span> / <span class="font-mono">G</span>
+      for the very top and bottom of the scrollback.
     </div>
   </section>
 
@@ -224,10 +267,6 @@ wzc                          # same, as a function</code></pre>
         <span class="text-[10px] uppercase tracking-wider text-mauve shrink-0">fixed</span>
       </div>
       <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
-        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; X</kbd></div>
-        <div class="text-sm text-subtext1 flex-1">Copy mode &mdash; vim-style keyboard selection</div>
-      </div>
-      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
         <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; F</kbd></div>
         <div class="text-sm text-subtext1 flex-1">Search the scrollback</div>
       </div>
@@ -243,6 +282,146 @@ wzc                          # same, as a function</code></pre>
         <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; C / &#8984; V</kbd></div>
         <div class="text-sm text-subtext1 flex-1">Copy / paste</div>
       </div>
+    </div>
+  </section>
+
+  <section id="copymode" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-teal">Copy mode</h2>
+      <span class="text-xs text-overlay0">vim-style keyboard selection &mdash; no mouse</span>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; &#8679; X</kbd></div>
+        <div class="text-sm text-subtext1 flex-1"><span class="text-text">Enter copy mode.</span> A cursor appears in the text</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">h j k l</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Move left / down / up / right</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">w &middot; b &middot; e</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Forward a word &middot; back a word &middot; end of word</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">0 &middot; ^ &middot; $</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Line start &middot; first non-blank &middot; line end</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">g / G</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Top / bottom of the <span class="text-text">whole scrollback</span></div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">H / M / L</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Top / middle / bottom of the viewport</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; b / &#8963; f</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Page up / page down</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">f&lt;char&gt; &middot; t&lt;char&gt;</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Jump to a character &middot; <span class="font-mono">;</span> repeats, <span class="font-mono">,</span> reverses</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">v</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Start a <span class="text-text">character</span> selection</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">V</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Select <span class="text-text">whole lines</span> &mdash; clean copies, no trailing whitespace</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; v</kbd></div>
+        <div class="text-sm text-subtext1 flex-1"><span class="text-text">Block / column</span> selection &mdash; cut one column out of tabular output</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">o</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Jump to the other end of the selection, to extend backwards</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">y</kbd></div>
+        <div class="text-sm text-subtext1 flex-1"><span class="text-text">Yank</span> &mdash; copy to clipboard and exit</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">q or Esc</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Leave without copying</div>
+        
+      </div>
+    </div>
+    <div class="mt-3 rounded-lg border border-teal/30 bg-teal/5 px-4 py-3 text-xs text-subtext0">
+      <span class="text-teal font-semibold">The loop:</span>
+      <kbd class="bg-surface0 rounded px-1">&#8963;&#8679;X</kbd> &rarr; move to the start &rarr;
+      <kbd class="bg-surface0 rounded px-1">v</kbd> &rarr; move to the end &rarr;
+      <kbd class="bg-surface0 rounded px-1">y</kbd>.
+      Use it to grab something that has scrolled past &mdash; an error, a SHA, a path &mdash; without reaching for the mouse
+      or fighting a TUI that captures clicks. Unlike QuickSelect it is manual and precise, and reaches the entire scrollback.
+    </div>
+  </section>
+
+  <section id="search" data-sec>
+    <div class="flex items-baseline gap-3 mb-3">
+      <h2 class="text-base font-semibold text-sapphire">Search</h2>
+      <span class="text-xs text-overlay0">inside the scrollback</span>
+    </div>
+    <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; F</kbd></div>
+        <div class="text-sm text-subtext1 flex-1"><span class="text-text">Open search.</span> Seeds from the current selection if there is one</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; n / &#8963; p</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Next / previous match</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&darr; / &uarr;</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Next / previous match (same thing)</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">Enter</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Previous match &mdash; note it steps <em>backwards</em>, not forwards</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">PageUp / PageDn</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Previous / next match a page at a time</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; r</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Cycle match type &mdash; plain text, case-insensitive, regex</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8963; u</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Clear the pattern, keep searching</div>
+        
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">Esc</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Close search</div>
+        
+      </div>
+    </div>
+    <div class="mt-3 rounded-lg border border-sapphire/30 bg-sapphire/5 px-4 py-3 text-xs text-subtext0">
+      Search hands off to <span class="font-mono text-text">copy mode</span> when you close it, so you can land on a
+      match and immediately select from there with <span class="font-mono">v</span> / <span class="font-mono">y</span>.
     </div>
   </section>
 

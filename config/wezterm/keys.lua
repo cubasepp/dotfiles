@@ -44,6 +44,16 @@ function M.apply(config)
 			}),
 		},
 
+		-- ---- scrolling ----
+		-- Shift+PageUp/PageDown are bound by default, but MacBooks have no PageUp or
+		-- PageDown key (they are Fn+Shift+Arrow), and nothing scrolls line-by-line.
+		{ key = "UpArrow", mods = "CMD|SHIFT", action = act.ScrollByLine(-1) },
+		{ key = "DownArrow", mods = "CMD|SHIFT", action = act.ScrollByLine(1) },
+		{ key = "UpArrow", mods = "CMD|ALT", action = act.ScrollByPage(-0.5) },
+		{ key = "DownArrow", mods = "CMD|ALT", action = act.ScrollByPage(0.5) },
+		{ key = "Home", mods = "CMD", action = act.ScrollToTop },
+		{ key = "End", mods = "CMD", action = act.ScrollToBottom },
+
 		-- ---- workspaces ----
 		{
 			key = "p",
