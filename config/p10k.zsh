@@ -918,7 +918,10 @@
 
   # Plug icon ahead of user@hostname while in SSH, so remote is visible even before
   # reading the text.
-  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_VISUAL_IDENTIFIER_EXPANSION=''
+  # $'' rather than a literal glyph: p10k does not run (g::) expansion on
+  # this parameter, so the escape must be resolved by zsh here -- and it survives
+  # editors and copy-paste that would silently eat a raw Private Use Area char.
+  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_VISUAL_IDENTIFIER_EXPANSION=$'\uf0a0'
   # Custom icon.
   # typeset -g POWERLEVEL9K_CONTEXT_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.

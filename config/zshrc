@@ -9,10 +9,11 @@ fi
 # never set for panes on a WezTerm mux domain (config/wezterm/domains.lua): the
 # shell is spawned by wezterm-mux-server on the remote host, not by a fresh
 # sshd login, so a session reached that way looks indistinguishable from local.
-# P9K_SSH is p10k's documented override for its own detection -- force it by
-# comparing hostname against the one machine physically sat at instead, which
-# is accurate for a plain `ssh` session too.
-[[ "$(hostname -s)" == "bogomil" ]] || export P9K_SSH=1
+# Force p10k's internal P9K_SSH flag by comparing hostname against the one
+# machine physically sat at, which is accurate for a plain `ssh` session too.
+# _P9K_SSH_TTY must be set alongside it: _p9k_init_ssh only honours a preset
+# P9K_SSH when _P9K_SSH_TTY matches $TTY, and otherwise resets the flag to 0.
+[[ "$(hostname -s)" == "bogomil" ]] || export P9K_SSH=1 _P9K_SSH_TTY=$TTY
 
 # Homebrew lives in different places per platform: /opt/homebrew on Apple
 # silicon, /usr/local on Intel macs, linuxbrew on Linux. Guarded so hosts
