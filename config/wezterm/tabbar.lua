@@ -143,8 +143,14 @@ wezterm.on("update-status", function(window, pane)
 	local segs = {}
 
 	-- cwd, with $HOME collapsed to ~
-	local cwd = pane:get_current_working_dir()
-	if cwd then
+	--
+	-- pcall: update-status fires on a timer, so the pane can be gone by the time
+	-- we ask (closing a tab, a mux pane disappearing). Unguarded this throws
+	-- "pane id N not found in mux" and the whole status line fails to render.
+	local ok, cwd = pcall(function()
+		return pane:get_current_working_dir()
+	end)
+	if ok and cwd then
 		local path
 		if type(cwd) == "userdata" or type(cwd) == "table" then
 			path = cwd.file_path
