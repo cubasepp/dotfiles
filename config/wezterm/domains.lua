@@ -10,6 +10,15 @@ local wezterm = require("wezterm")
 local M = {}
 
 function M.apply(config)
+	-- A local mux server, so local panes outlive the GUI: closing the window (or
+	-- quitting the app) no longer kills what is running in them. Relaunching
+	-- WezTerm reattaches. Same mechanism the pi already uses, applied locally.
+	-- NB: "local" is a reserved built-in domain name and cannot be redefined.
+	config.unix_domains = {
+		{ name = "mux" },
+	}
+	config.default_domain = "mux"
+
 	config.ssh_domains = {
 		{
 			name = "rasperry",

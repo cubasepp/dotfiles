@@ -44,6 +44,13 @@ function M.apply(config)
 			}),
 		},
 
+		{
+			-- overlay a letter on every pane; type it to focus that pane
+			key = "s",
+			mods = "CMD|SHIFT",
+			action = act.PaneSelect({ alphabet = "asdfghjkl" }),
+		},
+
 		-- ---- scrolling ----
 		-- Shift+PageUp/PageDown are bound by default, but MacBooks have no PageUp or
 		-- PageDown key (they are Fn+Shift+Arrow), and nothing scrolls line-by-line.
@@ -113,7 +120,16 @@ function M.apply(config)
 			mods = "CTRL|SHIFT",
 			action = act.QuickSelectArgs({
 				label = "insert path",
-				patterns = { "[^\\s]+" },
+				-- Curated instead of [^\\s]+ : that matched every word on screen, which
+				-- buried the thing you actually wanted under a wall of labels.
+				patterns = {
+					[==[\b[0-9a-f]{7,40}\b]==], -- git SHAs
+					[==[\b\d{1,3}(\.\d{1,3}){3}\b]==], -- IPv4
+					[==[\b[a-zA-Z][\w+.-]*://\S+]==], -- URLs
+					[==[[.~]?/[-\w.~/@+]+]==], -- paths
+					[==[[-\w./~]+:\d+(:\d+)?]==], -- path:line[:col]
+					[==["[^"]{2,}"]==], -- quoted strings
+				},
 				action = wezterm.action_callback(function(window, pane)
 					local path = window:get_selection_text_for_pane(pane)
 					if path and #path > 0 then

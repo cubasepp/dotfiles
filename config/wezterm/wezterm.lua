@@ -10,6 +10,7 @@ require("fonts").apply(config)
 require("tabbar").apply(config)
 require("keys").apply(config)
 require("domains").apply(config)
+require("links").apply(config)
 
 -- registers a gui-startup handler; nothing to apply
 require("startup")
