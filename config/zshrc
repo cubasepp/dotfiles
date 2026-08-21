@@ -9,11 +9,19 @@ fi
 # never set for panes on a WezTerm mux domain (config/wezterm/domains.lua): the
 # shell is spawned by wezterm-mux-server on the remote host, not by a fresh
 # sshd login, so a session reached that way looks indistinguishable from local.
-# Force p10k's internal P9K_SSH flag by comparing hostname against the one
-# machine physically sat at, which is accurate for a plain `ssh` session too.
-# _P9K_SSH_TTY must be set alongside it: _p9k_init_ssh only honours a preset
-# P9K_SSH when _P9K_SSH_TTY matches $TTY, and otherwise resets the flag to 0.
-[[ "$(hostname -s)" == "bogomil" ]] || export P9K_SSH=1 _P9K_SSH_TTY=$TTY
+# Nothing in the environment can tell the two apart -- a local pane's parent is
+# a wezterm-mux-server too -- so the machine has to say which one it is.
+#
+# Default to remote and let a marker file opt a machine out: a missing warning
+# is worse than a spurious one, and a new host then needs no config at all.
+# Create it on whatever machine you physically sit at:
+#
+#   mkdir -p ~/.config/cubasepp && touch ~/.config/cubasepp/is-local
+#
+# _P9K_SSH_TTY must be exported alongside P9K_SSH: _p9k_init_ssh only honours a
+# preset P9K_SSH when _P9K_SSH_TTY matches $TTY, and otherwise resets it to 0.
+[[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/cubasepp/is-local" ]] ||
+  export P9K_SSH=1 _P9K_SSH_TTY=$TTY
 
 # Homebrew lives in different places per platform: /opt/homebrew on Apple
 # silicon, /usr/local on Intel macs, linuxbrew on Linux. Guarded so hosts
