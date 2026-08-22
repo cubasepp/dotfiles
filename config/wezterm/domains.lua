@@ -27,6 +27,22 @@ function M.apply(config)
 			ssh_option = {
 				identityfile = wezterm.home_dir .. "/.ssh/mivo_id_ed25519",
 			},
+
+			-- Every client attaches to the one mux server the pi starts by
+			-- default, so this is a *shared* session: a tab opened on the laptop
+			-- shows up on the mac mini too, tmux-style. Accepted as a cosmetic
+			-- annoyance -- it is the same property that keeps the tabs alive
+			-- after the GUI goes away.
+			--
+			-- Uncommenting this makes each machine independent, at the cost of
+			-- that persistence: tabs then die with the connection, so nothing
+			-- long-running (a build, claude) survives closing the lid.
+			-- multiplexing = "None",
+			--
+			-- Independent *and* persistent is not something WezTerm exposes as a
+			-- setting -- it needs a per-client socket path on the remote. That is
+			-- implemented on the feat/per-machine-mux branch if it is ever worth
+			-- the extra moving parts.
 		},
 	}
 end
