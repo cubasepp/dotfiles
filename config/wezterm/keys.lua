@@ -105,6 +105,13 @@ function M.apply(config)
 			action = act.SpawnCommandInNewTab({ domain = { DomainName = "rasperry" } }),
 		},
 		{
+			-- new tab back on this machine, even from inside a remote domain pane --
+			-- CMD+T alone spawns in CurrentPaneDomain, which just re-connects
+			key = "l",
+			mods = "CMD|SHIFT",
+			action = act.SpawnCommandInNewTab({ domain = { DomainName = "local" } }),
+		},
+		{
 			key = "o",
 			mods = "CMD|SHIFT",
 			action = act.ShowLauncherArgs({
