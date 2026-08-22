@@ -40,9 +40,14 @@ function M.apply(config)
 			-- multiplexing = "None",
 			--
 			-- Independent *and* persistent is not something WezTerm exposes as a
-			-- setting -- it needs a per-client socket path on the remote. That is
-			-- implemented on the feat/per-machine-mux branch if it is ever worth
-			-- the extra moving parts.
+			-- setting. It is achievable, but only by hand: reach the pi through a
+			-- unix domain whose proxy_command is
+			--   ssh <host> "XDG_RUNTIME_DIR=/run/user/1000/wt-<client> \
+			--     wezterm-mux-server --daemonize; exec nc -U .../wezterm/sock"
+			-- keyed to wezterm.hostname(). Overriding socket_path alone is not
+			-- enough -- the pid file is what refuses a second server, and it
+			-- follows XDG_RUNTIME_DIR rather than the socket. Verified working,
+			-- then dropped as not worth the moving parts.
 		},
 	}
 end
