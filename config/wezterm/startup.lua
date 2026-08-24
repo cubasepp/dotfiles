@@ -2,24 +2,9 @@
 local wezterm = require("wezterm")
 
 wezterm.on("gui-startup", function(cmd)
-	-- With a unix mux domain, launching WezTerm may reattach to a session that
-	-- already has windows. Spawning unconditionally would add a second one, so
-	-- reuse what is there.
-	local mux_window
-	local existing = wezterm.mux.all_windows()
-	if #existing > 0 then
-		mux_window = existing[1]
-	else
-		local _, _, spawned = wezterm.mux.spawn_window(cmd or {})
-		mux_window = spawned
-	end
-
-	local window = mux_window and mux_window:gui_window()
-	if not window then
-		return
-	end
-
 	local screen = wezterm.gui.screens().active
+	local _, _, mux_window = wezterm.mux.spawn_window(cmd or {})
+	local window = mux_window:gui_window()
 	local dimensions = window:get_dimensions()
 
 	window:set_position(

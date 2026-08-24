@@ -6,19 +6,22 @@
 -- release -- see apps/15_wezterm.sh, where the version is pinned.
 --
 -- Set multiplexing = "None" for a plain ssh session instead.
+--
+-- There is deliberately no local unix domain. One was tried, to let local panes
+-- outlive the GUI, and it had to go: a pane on a mux domain is a *replica* that
+-- the GUI paints from state synced over a socket, and the pinned 20240203 mux
+-- client gets that sync wrong for partial repaints. Two symptoms, one cause --
+-- fzf in --height mode (fzf-tab on Tab) painted one row per keystroke instead
+-- of the whole list, and leaving a full-screen TUI like lazygit left the alt
+-- screen stuck on display. Both are fine in a plain local pane, and fine in
+-- kitty, which has no replication layer at all. Persistence on this machine is
+-- not worth a terminal that mis-draws; on the pi it is, so the domain below
+-- keeps it. If the pi ever shows the same drawing bugs, drop multiplexing there
+-- too and run zellij or tmux on the far end instead.
 local wezterm = require("wezterm")
 local M = {}
 
 function M.apply(config)
-	-- A local mux server, so local panes outlive the GUI: closing the window (or
-	-- quitting the app) no longer kills what is running in them. Relaunching
-	-- WezTerm reattaches. Same mechanism the pi already uses, applied locally.
-	-- NB: "local" is a reserved built-in domain name and cannot be redefined.
-	config.unix_domains = {
-		{ name = "mux" },
-	}
-	config.default_domain = "mux"
-
 	config.ssh_domains = {
 		{
 			name = "rasperry",
