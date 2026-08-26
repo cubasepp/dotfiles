@@ -1,0 +1,2 @@
+[env]
+WT = "{{ config_root | split(pat='/') | last | replace(from='-', to='_') }}"
