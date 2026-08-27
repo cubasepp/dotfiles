@@ -107,7 +107,7 @@ tailwind.config = {
       </div>
       <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
         <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; W</kbd></div>
-        <div class="text-sm text-subtext1 flex-1">Close tab (asks first)</div>
+        <div class="text-sm text-subtext1 flex-1">Close tab (asks first) &middot; on a Pi tab this <span class="text-yellow">kills the remote shell</span> &mdash; see <a href="#remote" class="text-sapphire hover:underline">Pi</a></div>
       </div>
       <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
         <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; 1&hellip;8</kbd></div>
@@ -219,14 +219,24 @@ tailwind.config = {
     </div>
     <div class="rounded-xl border border-surface0 bg-mantle overflow-hidden divide-y divide-surface0/70">
       <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
-        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; I</kbd></div>
-        <div class="text-sm text-subtext1 flex-1">New tab <span class="text-text">on the Pi</span>, in the current window</div>
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; O</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">Pick a domain &mdash; <span class="text-text">New tab</span> (fresh shell in <span class="font-mono">$HOME</span>) or <span class="text-text">Attach</span> (re-import the shells still running on the Pi, cwd and all). Fuzzy-filterable.</div>
         <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
       </div>
       <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
-        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; O</kbd></div>
-        <div class="text-sm text-subtext1 flex-1">Fuzzy-pick any domain (local, Pi, &hellip;)</div>
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; U</kbd></div>
+        <div class="text-sm text-subtext1 flex-1"><span class="text-text">Detach</span> &mdash; leave the Pi, shells keep running. Per <em>domain</em>, not per tab: every Pi tab closes locally at once.</div>
         <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; &#8679; L</kbd></div>
+        <div class="text-sm text-subtext1 flex-1">New tab <span class="text-text">back on this Mac</span> &mdash; works from inside a Pi pane, where plain <kbd class="bg-surface0 rounded px-1 text-xs">&#8984;T</kbd> would just spawn on the Pi again</div>
+        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
+      </div>
+      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
+        <div class="w-44 shrink-0"><kbd class="inline-block bg-surface0 border border-surface1 rounded px-2 py-0.5 text-xs text-lavender">&#8984; W</kbd></div>
+        <div class="text-sm text-subtext1 flex-1"><span class="text-yellow">Closes</span> the tab and <span class="text-text">kills the remote shell</span> for good. Not a detach &mdash; use <kbd class="bg-surface0 rounded px-1 text-xs">&#8984;&#8679;U</kbd> to keep it alive.</div>
+        <span class="text-[10px] uppercase tracking-wider text-yellow shrink-0">careful</span>
       </div>
       <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
         <div class="w-44 shrink-0"><code class="text-xs text-green">wzc</code></div>
@@ -234,7 +244,17 @@ tailwind.config = {
         <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
       </div>
     </div>
-    <div class="mt-3 grid sm:grid-cols-2 gap-3">
+    <div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div class="rounded-lg border border-surface0 bg-mantle p-4">
+        <p class="text-xs font-semibold text-subtext1 mb-2">Spawn vs. attach vs. detach</p>
+        <p class="text-[11px] text-overlay1">Persistence is real, but it is <span class="text-text">attach</span> that uses it. A <span class="text-text">new tab</span> always starts a fresh
+        shell in <span class="font-mono">$HOME</span> &mdash; that is <span class="font-mono">tmux new-window</span>, not <span class="font-mono">tmux attach</span>. If the Pi looks like it never
+        remembers a directory, that is why.</p>
+        <p class="text-[11px] text-overlay1 mt-2"><span class="text-text">Detach</span> (<kbd class="font-mono bg-surface0 rounded px-1">&#8984;&#8679;U</kbd>) hands panes back to the mux server;
+        <span class="text-text">close</span> (<kbd class="font-mono bg-surface0 rounded px-1">&#8984;W</kbd>) or <span class="font-mono">exit</span> reaps them. Nothing survives a reap, so an
+        empty server is indistinguishable from a cold start.</p>
+        <pre class="text-[11px] text-overlay2 bg-crust rounded p-2.5 mt-2 overflow-x-auto"><code>ssh raspberry wezterm cli list   # what is still alive</code></pre>
+      </div>
       <div class="rounded-lg border border-surface0 bg-mantle p-4">
         <p class="text-xs font-semibold text-subtext1 mb-2">Why the CLI blocks</p>
         <pre class="text-[11px] text-overlay2 bg-crust rounded p-2.5 overflow-x-auto"><code>wezterm connect rasperry     # blocks the shell
@@ -247,8 +267,16 @@ wzc                          # same, as a function</code></pre>
         <p class="text-[11px] text-overlay1">No <span class="font-mono">multiplexing</span> field set, so it defaults to <span class="font-mono text-text">"WezTerm"</span>: a
         <span class="font-mono">wezterm-mux-server</span> runs on the Pi and <span class="text-text">keeps your tabs alive</span> after you disconnect, tmux-style.</p>
         <p class="text-[11px] text-overlay1 mt-2">Both sides are on <span class="font-mono text-green">20240203-110809</span> &mdash; matching versions, which the mux protocol requires.</p>
-        <p class="text-[11px] text-overlay1 mt-2">Want plain SSH instead? Add <span class="font-mono text-yellow">multiplexing = "None"</span>.</p>
+        <p class="text-[11px] text-overlay1 mt-2">Every client attaches to the <span class="text-text">same</span> session, so a tab opened on the laptop shows up here too. Want plain SSH instead? Add <span class="font-mono text-yellow">multiplexing = "None"</span>.</p>
       </div>
+    </div>
+    <div class="mt-3 rounded-lg border border-yellow/30 bg-yellow/5 px-4 py-3 text-xs text-subtext0">
+      <span class="text-yellow font-semibold">The domain picker is hand-rolled.</span>
+      WezTerm always synthesizes a local mux domain named <span class="font-mono text-text">unix</span>
+      (<span class="font-mono">~/.local/share/wezterm/sock</span>) whether or not <span class="font-mono">unix_domains</span> is configured, and the stock
+      <span class="font-mono">ShowLauncherArgs{flags="DOMAINS"}</span> launcher offers no way to hide a domain. Attaching that one is the
+      local mux domain this setup deliberately dropped &mdash; it mis-draws partial repaints (fzf in <span class="font-mono">--height</span> mode, stuck alt screens).
+      So <kbd class="font-mono bg-surface0 rounded px-1">&#8984;&#8679;O</kbd> is an <span class="font-mono text-text">InputSelector</span> listing only local and the Pi. See <span class="font-mono">domains.lua</span>.
     </div>
   </section>
 

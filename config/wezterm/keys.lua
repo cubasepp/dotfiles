@@ -99,10 +99,15 @@ function M.apply(config)
 
 		-- ---- remote domains ----
 		{
-			-- new tab on the pi, in the current window
-			key = "i",
+			-- Leave the pi without killing it: DetachDomain closes every local tab
+			-- of that domain, while the panes keep running under the remote
+			-- wezterm-mux-server -- tmux's `detach`. CMD+W is the opposite: it
+			-- closes the tab, which reaps the remote shell for good.
+			--
+			-- Detaching is per *domain*, not per tab; all pi tabs go at once.
+			key = "u",
 			mods = "CMD|SHIFT",
-			action = act.SpawnCommandInNewTab({ domain = { DomainName = "rasperry" } }),
+			action = act.DetachDomain("CurrentPaneDomain"),
 		},
 		{
 			-- new tab back on this machine, even from inside a remote domain pane --
@@ -112,11 +117,38 @@ function M.apply(config)
 			action = act.SpawnCommandInNewTab({ domain = { DomainName = "local" } }),
 		},
 		{
+			-- Hand-rolled instead of ShowLauncherArgs{flags="DOMAINS"}: that lists
+			-- *every* known domain, and WezTerm always synthesizes one named `unix`
+			-- (a local mux server at ~/.local/share/wezterm/sock) whether or not
+			-- unix_domains is configured. There is no way to hide a domain from the
+			-- stock launcher, and that row is the one thing this setup does not want
+			-- -- see domains.lua on why the local mux domain was dropped. An
+			-- InputSelector only offers what is listed here.
+			--
+			-- Spawn and attach are separate rows on purpose: "New tab" always starts
+			-- a fresh shell in $HOME, "Attach" re-imports the shells still running
+			-- under the remote mux server, cwd and all.
 			key = "o",
 			mods = "CMD|SHIFT",
-			action = act.ShowLauncherArgs({
-				flags = "FUZZY|DOMAINS",
+			action = act.InputSelector({
 				title = "Select domain",
+				fuzzy = true,
+				choices = {
+					{ id = "spawn:local", label = "New tab  --  local" },
+					{ id = "spawn:rasperry", label = "New tab  --  pi (rasperry)" },
+					{ id = "attach:rasperry", label = "Attach   --  pi (rasperry), live shells" },
+				},
+				action = wezterm.action_callback(function(window, pane, id, label)
+					if not id then
+						return -- cancelled
+					end
+					local verb, domain = id:match("^(%a+):(.+)$")
+					if verb == "attach" then
+						window:perform_action(act.AttachDomain(domain), pane)
+					else
+						window:perform_action(act.SpawnCommandInNewTab({ domain = { DomainName = domain } }), pane)
+					end
+				end),
 			}),
 		},
 
