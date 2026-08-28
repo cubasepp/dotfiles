@@ -1,4 +1,5 @@
--- Catppuccin Mocha palette. Shared by appearance.lua and tabbar.lua.
+-- Catppuccin Mocha palette. Used by tabbar.lua; appearance.lua takes its colours
+-- from the built-in "Catppuccin Mocha" scheme instead.
 return {
 	rosewater = "#f5e0dc",
 	flamingo = "#f2cdcd",

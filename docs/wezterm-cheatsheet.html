@@ -238,11 +238,6 @@ tailwind.config = {
         <div class="text-sm text-subtext1 flex-1"><span class="text-yellow">Closes</span> the tab and <span class="text-text">kills the remote shell</span> for good. Not a detach &mdash; use <kbd class="bg-surface0 rounded px-1 text-xs">&#8984;&#8679;U</kbd> to keep it alive.</div>
         <span class="text-[10px] uppercase tracking-wider text-yellow shrink-0">careful</span>
       </div>
-      <div data-row class="flex items-center gap-4 px-4 py-2.5 hover:bg-surface0/40">
-        <div class="w-44 shrink-0"><code class="text-xs text-green">wzc</code></div>
-        <div class="text-sm text-subtext1 flex-1">Shell helper &mdash; connect in the background, prompt returns instantly</div>
-        <span class="text-[10px] uppercase tracking-wider text-green shrink-0">new</span>
-      </div>
     </div>
     <div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
       <div class="rounded-lg border border-surface0 bg-mantle p-4">
@@ -258,8 +253,7 @@ tailwind.config = {
       <div class="rounded-lg border border-surface0 bg-mantle p-4">
         <p class="text-xs font-semibold text-subtext1 mb-2">Why the CLI blocks</p>
         <pre class="text-[11px] text-overlay2 bg-crust rounded p-2.5 overflow-x-auto"><code>wezterm connect rasperry     # blocks the shell
-wezterm connect rasperry &amp;!  # detached (zsh)
-wzc                          # same, as a function</code></pre>
+wezterm connect rasperry &amp;!  # detached (zsh)</code></pre>
         <p class="text-[11px] text-overlay1 mt-2"><span class="font-mono">wezterm connect</span> is a foreground client: it lives as long as its window. Not a hang.</p>
       </div>
       <div class="rounded-lg border border-surface0 bg-mantle p-4">
@@ -501,11 +495,12 @@ wezterm --version</code></pre>
         <pre class="text-[11px] text-overlay2 bg-crust rounded p-2.5 overflow-x-auto"><code>~/.config/wezterm/
   wezterm.lua     <span class="text-overlay0">entry point</span>
   colors.lua      <span class="text-overlay0">mocha palette</span>
-  appearance.lua  <span class="text-overlay0">scheme, opacity, blur</span>
+  appearance.lua  <span class="text-overlay0">scheme, opacity, bell, scrollback</span>
   fonts.lua       <span class="text-overlay0">Hack Nerd Font Mono 12</span>
   tabbar.lua      <span class="text-overlay0">tab bar + status line</span>
   keys.lua        <span class="text-overlay0">key bindings</span>
   domains.lua     <span class="text-overlay0">ssh/mux domains</span>
+  links.lua       <span class="text-overlay0">click paths -&gt; nvim</span>
   startup.lua     <span class="text-overlay0">window centring</span></code></pre>
         <p class="text-[11px] text-overlay1">Managed by <span class="font-mono text-text">cubasepp</span>:
           edit <span class="font-mono">config/wezterm/</span> in the repo, then <span class="font-mono">./configure.sh wezterm</span>.
@@ -547,26 +542,24 @@ wezterm --version</code></pre>
     </div>
   </section>
 
-  <!-- ============ BACKUPS ============ -->
+  <!-- ============ ROLLBACK ============ -->
   <section data-sec>
     <div class="flex items-baseline gap-3 mb-3">
-      <h2 class="text-base font-semibold text-overlay2">Backups</h2>
-      <span class="text-xs text-overlay0">all in <span class="font-mono">~</span></span>
+      <h2 class="text-base font-semibold text-overlay2">Rollback</h2>
+      <span class="text-xs text-overlay0">git, not <span class="font-mono">.bak</span> files</span>
     </div>
-    <div class="rounded-xl border border-surface0 bg-mantle overflow-x-auto">
-      <table class="w-full text-sm">
-        <thead class="text-[11px] uppercase tracking-wider text-overlay0 border-b border-surface0">
-          <tr><th class="text-left px-4 py-2 font-medium">File</th><th class="text-left px-4 py-2 font-medium">Snapshot of</th></tr>
-        </thead>
-        <tbody class="divide-y divide-surface0/70 text-subtext0">
-          <tr data-row><td class="px-4 py-2 font-mono text-xs text-green">.wezterm.lua.bak</td><td class="px-4 py-2 text-xs">Your true original, 88 lines &mdash; pre-cubasepp rollback</td></tr>
-          <tr data-row><td class="px-4 py-2 font-mono text-xs">.wezterm.lua.pretabbar</td><td class="px-4 py-2 text-xs">Identical to the original (earlier attempts were reverted)</td></tr>
-          <tr data-row><td class="px-4 py-2 font-mono text-xs">.wezterm.lua.preworkspace</td><td class="px-4 py-2 text-xs">Tab bar in, before workspace keys</td></tr>
-          <tr data-row><td class="px-4 py-2 font-mono text-xs">.wezterm.lua.predomain</td><td class="px-4 py-2 text-xs">Before the Pi domain keys</td></tr>
-          <tr data-row><td class="px-4 py-2 font-mono text-xs">.zshrc.bak</td><td class="px-4 py-2 text-xs">Before the <span class="font-mono">wzc</span> function</td></tr>
-          <tr data-row><td class="px-4 py-2 font-mono text-xs">symbolichotkeys.plist.bak</td><td class="px-4 py-2 text-xs">macOS hotkeys before 60/61 were disabled</td></tr>
-        </tbody>
-      </table>
+    <div class="rounded-lg border border-surface0 bg-mantle p-4">
+      <p class="text-[11px] text-overlay1">The hand-made snapshots this section used to list
+      (<span class="font-mono">~/.wezterm.lua.bak</span> and friends) are gone, and so is
+      <span class="font-mono">~/.wezterm.lua</span> itself &mdash; the installer deletes it on every run, since it would
+      otherwise take precedence over <span class="font-mono">~/.config/wezterm/</span> and silently win.</p>
+      <p class="text-[11px] text-overlay1 mt-2">The config is a tracked part of cubasepp, so the repo is the rollback path:</p>
+      <pre class="text-[11px] text-overlay2 bg-crust rounded p-2.5 mt-2 overflow-x-auto"><code>git log --oneline -- config/wezterm/   <span class="text-overlay0"># every change, with reasons</span>
+git diff HEAD~1 -- config/wezterm/
+git checkout &lt;sha&gt; -- config/wezterm/
+./configure.sh wezterm                <span class="text-overlay0"># reinstall</span></code></pre>
+      <p class="text-[11px] text-overlay1 mt-2">Editing <span class="font-mono">~/.config/wezterm/</span> directly is fine for a quick experiment, but the next
+      <span class="font-mono">./configure.sh wezterm</span> overwrites it. Real changes belong in <span class="font-mono">config/wezterm/</span>.</p>
     </div>
   </section>
 
