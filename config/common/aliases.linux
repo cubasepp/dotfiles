@@ -18,6 +18,7 @@ alias vim='nvim'
 alias g='git'
 alias d='docker'
 alias bat='batcat'
+alias cat='batcat --paging=never'
 alias lzg='lazygit'
 alias lzd='lazydocker'
 

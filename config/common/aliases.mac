@@ -4,7 +4,6 @@ alias ll='ls'
 alias lsa='ls -a'
 alias lt='eza --tree --level=2 --hyperlink --long --icons=auto --git'
 alias lta='lt -a'
-alias fd='fdfind'
 alias cd='z'
 
 # Directories
@@ -17,6 +16,7 @@ alias ....='cd ../../..'
 alias vim='nvim'
 alias g='git'
 alias d='docker'
+alias cat='bat --paging=never'
 alias lzg='lazygit'
 alias lzd='lazydocker'
 
