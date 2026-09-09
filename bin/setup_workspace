@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# setup_workspace - Copy config files from stylink-backend
+
+SOURCE_DIR="$HOME/work/stylink/stylink-backend"
+TARGET_DIR="$PWD"
+
+# Icons
+CHECK="✅"
+SKIP="⏭️"
+ERROR="❌"
+
+# Files to copy
+FILES=(
+  "mise.toml"
+  "mise.local.toml"
+  ".env.development.local"
+  ".env.test.local"
+)
+
+echo "Setting up workspace..."
+echo "Source: $SOURCE_DIR"
+echo "Target: $TARGET_DIR"
+echo ""
+
+for file in "${FILES[@]}"; do
+  SOURCE_FILE="$SOURCE_DIR/$file"
+  TARGET_FILE="$TARGET_DIR/$file"
+
+  if [ ! -f "$SOURCE_FILE" ]; then
+    echo "$ERROR $file - Source not found"
+    continue
+  fi
+
+  if [ -f "$TARGET_FILE" ]; then
+    echo "$SKIP $file - Already exists"
+  else
+    cp "$SOURCE_FILE" "$TARGET_FILE"
+    echo "$CHECK $file - Copied"
+  fi
+done
+
+echo ""
+
+# The files just copied in are new to this directory, and mise refuses to load a
+# config it has not been trusted for -- it warns and hands you no env at all.
+# Trust it here so the next shell in this directory just works.
+if mise trust >/dev/null 2>&1; then
+  echo "$CHECK mise trust - Config trusted"
+else
+  echo "$ERROR mise trust - Failed"
+fi
+
+echo ""
+echo "Done! ✨"
