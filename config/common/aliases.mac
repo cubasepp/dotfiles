@@ -27,3 +27,37 @@ alias dr='rmdir'
 # alias gcm='git commit -m'
 # alias gcam='git commit -a -m'
 # alias gcad='git commit -a --amend'
+
+# Suffix aliases: a bare filename as the command opens it with the right tool,
+# so `README.md` does what `bat README.md` does. Written as '$EDITOR' in single
+# quotes on purpose -- config/common/zsh sources this file (line 2) before
+# `editor` (line 3), so the variable does not exist yet and must be expanded at
+# use time, not here. It also has to stay a single word: zsh does not split the
+# expansion, so an $EDITOR with arguments would be looked up as one command name.
+alias -s json=bat
+alias -s md=bat
+alias -s txt=bat
+alias -s log=bat
+alias -s rb='$EDITOR'
+alias -s js='$EDITOR'
+alias -s html=open
+
+# Makefile and Dockerfile cannot be suffix aliases: `alias -s` only matches what
+# follows a dot, and these have no extension at all. A plain alias does the job,
+# since neither name means anything as a command otherwise. Unlike a suffix
+# alias this matches the bare word only -- `sub/Makefile` still needs `bat`.
+alias Makefile='bat Makefile'
+alias Dockerfile='bat Dockerfile'
+
+# Env files. A suffix alias only ever sees the LAST dot segment, so
+# `.env.test.local` matches `local` and `.env.development` matches `development`
+# -- there is no entry for `env` to be had, it is one per trailing flavour.
+#
+# `.env` on its own cannot be a suffix alias at all: a leading dot leaves no
+# base name, so zsh does not treat it as base+suffix and just reports "command
+# not found". Same plain-alias trick as Makefile above.
+alias -s local=bat
+alias -s development=bat
+alias -s test=bat
+alias -s production=bat
+alias .env='bat .env'

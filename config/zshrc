@@ -98,6 +98,26 @@ fi
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
+# Expand history references at the moment you hit space, so `!!`, `!$` and `!-2`
+# turn into the real text on the command line instead of running unseen.
+bindkey ' ' magic-space
+
+# CTRL+X L: clear the screen *and* throw away the scrollback. ^L (clear-screen)
+# only wipes what is visible -- scrolling back still shows everything, which is
+# not what you want after a `cat` of something private or a wall of build noise.
+# \e[3J is the erase-scrollback sequence; WezTerm honours it.
+#
+# Escape sequences go to $TTY, not stdout: a widget's stdout is not the terminal.
+# `zle .clear-screen` with the leading dot always means the builtin widget, so
+# renaming this function to `clear-screen` later would not turn it into an
+# infinite recursion.
+cubasepp-clear-screen() {
+  print -rn -- $'\e[3J' >"$TTY"
+  zle .clear-screen
+}
+zle -N cubasepp-clear-screen
+bindkey '^Xl' cubasepp-clear-screen
+
 source $HOME/.local/share/cubasepp/config/common/zsh_style
 
 # fzf shell integration: CTRL-T (paste file path at cursor), ALT-C (cd into dir), CTRL-R (history search)
