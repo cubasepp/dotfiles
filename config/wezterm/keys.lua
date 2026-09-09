@@ -9,6 +9,22 @@ local act = wezterm.action
 local M = {}
 
 function M.apply(config)
+	-- Umlauts on the LEFT Option key, Alt/Meta on the RIGHT -- the opposite of
+	-- WezTerm's macOS default. Two conventions collide on this key: macOS composes
+	-- Option+<key> into a character (Option+u then o = "ö"), while terminals expect
+	-- Option to mean Meta and send ESC + the base key. WezTerm decides per side, so
+	-- one of the two Option keys always has to give.
+	--
+	-- Left composes, so umlauts are typed exactly as in every other mac app. Right
+	-- sends Meta, which is where every ESC-prefix binding moved to: fzf's ALT-C,
+	-- ^[. (insert-last-word), Alt+F/B/D word motions, aerc's <A-p>/<A-n>, and copy
+	-- mode's ALT+b/f/m. On the left those no longer exist -- Option+c is "ç" now.
+	--
+	-- Both lines are explicit even though `false` is already the default for the
+	-- left one: the pair only makes sense read together.
+	config.send_composed_key_when_left_alt_is_pressed = true
+	config.send_composed_key_when_right_alt_is_pressed = false
+
 	config.keys = {
 		-- ---- panes ----
 		{
@@ -151,6 +167,19 @@ function M.apply(config)
 				end),
 			}),
 		},
+
+		-- ---- keys handed back to the shell ----
+		-- WezTerm binds plain CTRL+X to ActivateCopyMode on top of the documented
+		-- CTRL+SHIFT+X, so the key never reaches zsh -- and ^X is readline's prefix for
+		-- a whole keymap (^Xe edit-command-line, ^Xu undo, and cubasepp's own ^Xl in
+		-- config/zshrc). Copy mode keeps CTRL+SHIFT+X.
+		--
+		-- Both letter cases are listed because `wezterm show-keys` renders the default
+		-- table as `CTRL X` but takes `key = "x"` in configs, and it does not print
+		-- removals at all -- so which of the two actually matches cannot be read off
+		-- the tool, only pressed. Confirmed working; two entries cost nothing.
+		{ key = "x", mods = "CTRL", action = act.DisableDefaultAssignment },
+		{ key = "X", mods = "CTRL", action = act.DisableDefaultAssignment },
 
 		-- ---- quick select ----
 		{
