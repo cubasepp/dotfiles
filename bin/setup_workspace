@@ -16,6 +16,7 @@ FILES=(
   "mise.local.toml"
   ".env.development.local"
   ".env.test.local"
+  ".kamalconnector"
 )
 
 echo "Setting up workspace..."
