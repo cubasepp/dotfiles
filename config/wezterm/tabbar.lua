@@ -5,13 +5,32 @@
 -- renders *inside* the tab bar, so hiding the bar hides the status line too.
 local wezterm = require("wezterm")
 local mocha = require("colors")
+local fonts = require("fonts")
 
 local M = {}
 
--- Rounded pill caps. WezTerm draws these itself (custom_block_glyphs), as true
--- quadratic curves, so they are pixel-perfect regardless of the font in use.
-local LEFT_CAP = utf8.char(0xe0b6) -- 
-local RIGHT_CAP = utf8.char(0xe0b4) -- 
+-- Pill caps. WezTerm draws both pairs itself (custom_block_glyphs) rather than
+-- taking them from the font, so neither depends on Hack being present.
+--
+-- The rounded pair are true quadratic curves, which is exactly why they need
+-- pixels: on a 1x panel the curve gets ~8px of height to work with and the
+-- result is a visible staircase. The half blocks are axis-aligned rectangles
+-- and land on whole pixels at any density. Same one-cell width either way, so
+-- the truncation arithmetic below is unaffected.
+local ROUND_LEFT = utf8.char(0xe0b6)
+local ROUND_RIGHT = utf8.char(0xe0b4)
+local FLAT_LEFT = utf8.char(0x258c)
+local FLAT_RIGHT = utf8.char(0x2590)
+
+-- conf is the *effective* config, i.e. with this window's per-screen overrides
+-- from fonts.lua applied -- so two windows on two screens each get their own
+-- answer, which a module-level flag could not give.
+local function caps(conf)
+	if fonts.is_lodpi(conf) then
+		return FLAT_LEFT, FLAT_RIGHT
+	end
+	return ROUND_LEFT, ROUND_RIGHT
+end
 
 -- foreground process -> Nerd Font glyph
 local process_icons = {
@@ -77,6 +96,7 @@ local function tab_label(tab)
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width)
+	local LEFT_CAP, RIGHT_CAP = caps(conf)
 	local idx = tab.tab_index + 1
 	local is_active = tab.is_active
 
@@ -124,6 +144,8 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width
 end)
 
 wezterm.on("update-status", function(window, pane)
+	local LEFT_CAP, RIGHT_CAP = caps(window:effective_config())
+
 	-- Left: workspace badge. Deliberately NOT mauve -- that is the active tab's
 	-- colour, and matching hues made the two read as a single blob.
 	window:set_left_status(wezterm.format({
