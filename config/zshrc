@@ -79,7 +79,13 @@ zinit snippet OMZP::rails
 # Theme: Powerlevel10k
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-zinit snippet $HOME/.local/share/cubasepp/config/common/zsh
+# Plain source, not `zinit snippet`: zinit copies a local snippet into
+# ~/.local/share/zinit/snippets/ and sources the *copy* (plus its .zwc), so
+# every later edit to this repo is invisible until the snippet is updated by
+# hand. That is how the ssh() wrapper in config/common/ssh silently never
+# loaded. There is nothing to gain here anyway -- the file is already on disk,
+# and zinit's snippet machinery only pays off for remote URLs.
+source $HOME/.local/share/cubasepp/config/common/zsh
 
 # Load completions
 autoload -Uz compinit && compinit
