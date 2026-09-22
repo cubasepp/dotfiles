@@ -1,0 +1,36 @@
+# Restore the local terminal after every ssh, however the session ended.
+#
+# The terminal state lives on *this* side of the connection: nvim, lazygit, fzf
+# and friends on the far end put the local tty into raw mode and turn on the
+# alt screen, mouse reporting and bracketed paste by writing escape sequences
+# back through the pipe. A clean logout lets ssh undo all of that.
+#
+# A dropped link does not. ssh dies without restoring anything, and the shell
+# that gets the tty back inherits the remote program's settings: no echo, Enter
+# doing nothing useful, the mouse spitting `[<35;…M`, colours stuck. The shell
+# is fine -- the terminal around it is not, and only `stty sane; reset`, typed
+# blind and terminated with ^J, gets it back.
+#
+# So snapshot the line settings before handing the tty over and put them back
+# afterwards. ServerAliveInterval in ~/.ssh/config (Host *) is what makes this
+# fire within ~45s of a drop instead of after the TCP timeout.
+ssh() {
+  # No tty to save or restore: `ssh host cmd </dev/null`, a pipeline, a script
+  # that sources this file. `stty -g` would just error there.
+  [[ -t 0 ]] || { command ssh "$@"; return; }
+
+  local saved ret
+  saved=$(stty -g)
+  command ssh "$@"
+  ret=$?
+  stty "$saved"
+
+  # stty covers the kernel's line discipline only; the modes below live in the
+  # terminal emulator and need their own reset: leave the alt screen (1049),
+  # stop mouse reporting (1000/1002/1003 for click, drag and any-motion, 1006
+  # for the SGR encoding), stop bracketed paste (2004), show the cursor (25),
+  # drop leftover colours and attributes (0m).
+  printf '\e[?1049l\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?2004l\e[?25h\e[0m'
+
+  return $ret
+}
