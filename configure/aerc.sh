@@ -7,7 +7,7 @@ else
   # ~/Library/Preferences on macOS, ~/.config elsewhere.
   if [ -n "$XDG_CONFIG_HOME" ]; then
     AERC_CONFIG_DIR="$XDG_CONFIG_HOME/aerc"
-  elif [[ "$UNAME" == "Darwin" ]]; then
+  elif [[ "${UNAME:-$(uname)}" == "Darwin" ]]; then
     AERC_CONFIG_DIR="$HOME/Library/Preferences/aerc"
   else
     AERC_CONFIG_DIR="$HOME/.config/aerc"
